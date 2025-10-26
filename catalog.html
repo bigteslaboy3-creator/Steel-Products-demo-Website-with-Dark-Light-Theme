@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog | SteelWorks</title>
+    <style>
+        :root {
+            /* Dark Theme Colors */
+            --dark-bg-primary: #121212;
+            --dark-bg-secondary: #1e1e1e;
+            --dark-bg-card: #2d2d2d;
+            --dark-text-primary: #e0e0e0;
+            --dark-text-secondary: #a0a0a0;
+            --dark-accent: #3a8bbb;
+            --dark-border: #404040;
+            
+            /* Light Theme Colors */
+            --light-bg-primary: #f5f5f5;
+            --light-bg-secondary: #ffffff;
+            --light-bg-card: #ffffff;
+            --light-text-primary: #333333;
+            --light-text-secondary: #666666;
+            --light-accent: #2a7aac;
+            --light-border: #e0e0e0;
+            
+            /* Common Colors */
+            --accent-color: #3a8bbb;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --error-color: #f44336;
+            
+            /* Typography */
+            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-heading: 'Arial', sans-serif;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            
+            /* Border Radius */
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            
+            /* Shadows */
+            --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background-color: var(--dark-bg-primary);
+            color: var(--dark-text-primary);
+        }
+
+        body.light-theme {
+            background-color: var(--light-bg-primary);
+            color: var(--light-text-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2a7aac;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        body.dark-theme .btn-secondary {
+            color: var(--dark-text-primary);
+            border-color: var(--dark-text-primary);
+        }
+
+        body.dark-theme .btn-secondary:hover {
+            background-color: var(--dark-text-primary);
+            color: var(--dark-bg-primary);
+        }
+
+        body.light-theme .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Header */
+        header {
+            padding: var(--spacing-sm) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-theme header {
+            background-color: var(--dark-bg-secondary);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        body.light-theme header {
+            background-color: var(--light-bg-secondary);
+            border-bottom: 1px solid var(--light-border);
+            box-shadow: var(--shadow-light);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        nav a {
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-theme .theme-toggle {
+            background-color: var(--dark-bg-card);
+        }
+
+        body.light-theme .theme-toggle {
+            background-color: var(--light-bg-card);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Catalog Header */
+        .catalog-header {
+            padding: var(--spacing-xl) 0 var(--spacing-lg);
+            text-align: center;
+        }
+
+        .catalog-header h1 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .catalog-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        body.dark-theme .catalog-header p {
+            color: var(--dark-text-secondary);
+        }
+
+        body.light-theme .catalog-header p {
+            color: var(--light-text-secondary);
+        }
+
+        /* Catalog Filters */
+        .catalog-filters {
+            padding: var(--spacing-md) 0;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        body.dark-theme .search-box input {
+            background-color: var(--dark-bg-card);
+            border-color: var(--dark-border);
+            color: var(--dark-text-primary);
+        }
+
+        body.light-theme .search-box input {
+            background-color: var(--light-bg-card);
+            border-color: var(--light-border);
+            color: var(--light-text-primary);
+        }
+
+        .filter-options {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        body.dark-theme .filter-select {
+            background-color: var(--dark-bg-card);
+            border-color: var(--dark-border);
+            color: var(--dark-text-primary);
+        }
+
+        body.light-theme .filter-select {
+            background-color: var(--light-bg-card);
+            border-color: var(--light-border);
+            color: var(--light-text-primary);
+        }
+
+        /* Products Catalog */
+        .products-catalog {
+            padding: var(--spacing-md) 0 var(--spacing-xl);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .product-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-theme .product-card {
+            background-color: var(--dark-bg-card);
+            box-shadow: var(--shadow-medium);
+        }
+
+        body.light-theme .product-card {
+            background-color: var(--light-bg-card);
+            box-shadow: var(--shadow-light);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: var(--spacing-md);
+        }
+
+        .product-info h3 {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .product-code {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .product-specs {
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        body.dark-theme .product-specs {
+            color: var(--dark-text-secondary);
+        }
+
+        body.light-theme .product-specs {
+            color: var(--light-text-secondary);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #25D366;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            margin-top: var(--spacing-sm);
+            transition: background-color 0.3s, transform 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-xl);
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        body.dark-theme .pagination-btn {
+            border-color: var(--dark-border);
+            color: var(--dark-text-primary);
+        }
+
+        body.light-theme .pagination-btn {
+            border-color: var(--light-border);
+            color: var(--light-text-primary);
+        }
+
+        .pagination-btn.active, .pagination-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            padding: var(--spacing-xl) 0 var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        body.dark-theme footer {
+            background-color: var(--dark-bg-secondary);
+            border-top: 1px solid var(--dark-border);
+        }
+
+        body.light-theme footer {
+            background-color: var(--light-bg-secondary);
+            border-top: 1px solid var(--light-border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-section h3 {
+            margin-bottom: var(--spacing-md);
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid;
+        }
+
+        body.dark-theme .footer-bottom {
+            border-color: var(--dark-border);
+        }
+
+        body.light-theme .footer-bottom {
+            border-color: var(--light-border);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: inherit;
+                padding: var(--spacing-md);
+                box-shadow: var(--shadow-medium);
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .filter-options {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+            }
+            
+            .catalog-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-1 { margin-top: var(--spacing-sm); }
+        .mt-2 { margin-top: var(--spacing-md); }
+        .mt-3 { margin-top: var(--spacing-lg); }
+        
+        .mb-1 { margin-bottom: var(--spacing-sm); }
+        .mb-2 { margin-bottom: var(--spacing-md); }
+        .mb-3 { margin-bottom: var(--spacing-lg); }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Steel<span>Works</span></h1>
+            </div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html" class="active">Products</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Catalog Header -->
+    <section class="catalog-header">
+        <div class="container">
+            <h1>Our Steel Products</h1>
+            <p>Explore our comprehensive range of high-quality steel products for industrial and commercial applications</p>
+        </div>
+    </section>
+
+    <!-- Catalog Filters -->
+    <section class="catalog-filters">
+        <div class="container">
+            <div class="filters-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search products...">
+                </div>
+                <div class="filter-options">
+                    <select class="filter-select" id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="structural">Structural Steel</option>
+                        <option value="sheets">Steel Sheets</option>
+                        <option value="pipes">Steel Pipes</option>
+                        <option value="rods">Steel Rods</option>
+                        <option value="custom">Custom Fabrication</option>
+                    </select>
+                    <select class="filter-select" id="sort-filter">
+                        <option value="name">Sort by Name</option>
+                        <option value="code">Sort by Code</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Catalog -->
+    <section class="products-catalog">
+        <div class="container">
+            <div class="products-grid" id="products-container">
+                <!-- Product cards will be dynamically loaded here -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <h2>Steel<span>Works</span></h2>
+                    </div>
+                    <p>Providing premium steel solutions for industrial and commercial applications since 2005.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Products</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Structural Steel</a></li>
+                        <li><a href="#">Steel Sheets</a></li>
+                        <li><a href="#">Steel Pipes</a></li>
+                        <li><a href="#">Custom Fabrication</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Industrial Area, Steel City</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@steelworks.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 SteelWorks. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "Structural Steel Beams",
+                code: "ST-BM-001",
+                category: "structural",
+                description: "High-strength structural beams for construction and industrial applications.",
+                specs: "Sizes: 100x50mm to 600x300mm | Length: 6m to 12m",
+                icon: "fas fa-grip-lines-vertical"
+            },
+            {
+                id: 2,
+                name: "Galvanized Steel Sheets",
+                code: "ST-SH-002",
+                category: "sheets",
+                description: "Corrosion-resistant galvanized sheets for roofing and industrial applications.",
+                specs: "Thickness: 0.4mm to 3.0mm | Width: 1000mm to 1500mm",
+                icon: "fas fa-th-large"
+            },
+            {
+                id: 3,
+                name: "Stainless Steel Pipes",
+                code: "ST-PP-003",
+                category: "pipes",
+                description: "High-quality stainless steel pipes for plumbing and industrial applications.",
+                specs: "Diameter: 15mm to 300mm | Schedule: 10 to 80",
+                icon: "fas fa-pipe"
+            },
+            {
+                id: 4,
+                name: "Mild Steel Plates",
+                code: "ST-PL-004",
+                category: "sheets",
+                description: "Versatile mild steel plates for fabrication and construction projects.",
+                specs: "Thickness: 3mm to 50mm | Sizes: 1500x3000mm to 2000x6000mm",
+                icon: "fas fa-square"
+            },
+            {
+                id: 5,
+                name: "Steel Reinforcement Bars",
+                code: "ST-RB-005",
+                category: "rods",
+                description: "High-tensile steel rebars for reinforced concrete construction.",
+                specs: "Diameter: 6mm to 40mm | Grade: Fe415, Fe500, Fe550",
+                icon: "fas fa-grip-lines"
+            },
+            {
+                id: 6,
+                name: "Square Steel Tubes",
+                code: "ST-TB-006",
+                category: "pipes",
+                description: "Precision square tubes for structural and decorative applications.",
+                specs: "Size: 20x20mm to 150x150mm | Thickness: 1.2mm to 6.0mm",
+                icon: "fas fa-cube"
+            },
+            {
+                id: 7,
+                name: "Steel Angles",
+                code: "ST-AG-007",
+                category: "structural",
+                description: "Equal and unequal steel angles for structural frameworks.",
+                specs: "Sizes: 25x25mm to 150x150mm | Thickness: 3mm to 12mm",
+                icon: "fas fa-angle-right"
+            },
+            {
+                id: 8,
+                name: "Steel Channels",
+                code: "ST-CH-008",
+                category: "structural",
+                description: "Structural steel channels for building and construction.",
+                specs: "Sizes: 75x40mm to 400x100mm | Weight: 5.4kg/m to 49.4kg/m",
+                icon: "fas fa-vector-square"
+            },
+            {
+                id: 9,
+                name: "Steel Coils",
+                code: "ST-CL-009",
+                category: "sheets",
+                description: "Hot-rolled and cold-rolled steel coils for various applications.",
+                specs: "Width: 600mm to 1500mm | Thickness: 0.3mm to 3.0mm",
+                icon: "fas fa-circle"
+            },
+            {
+                id: 10,
+                name: "Custom Steel Fabrication",
+                code: "ST-CF-010",
+                category: "custom",
+                description: "Tailored steel fabrication services to meet specific project requirements.",
+                specs: "Custom sizes and specifications as per client requirements",
+                icon: "fas fa-tools"
+            },
+            {
+                id: 11,
+                name: "Steel Round Bars",
+                code: "ST-RD-011",
+                category: "rods",
+                description: "Precision steel round bars for machining and construction.",
+                specs: "Diameter: 5mm to 250mm | Length: 3m to 6m",
+                icon: "fas fa-circle"
+            },
+            {
+                id: 12,
+                name: "Steel Flat Bars",
+                code: "ST-FB-012",
+                category: "rods",
+                description: "Versatile steel flat bars for fabrication and construction.",
+                specs: "Width: 20mm to 200mm | Thickness: 3mm to 50mm",
+                icon: "fas fa-minus"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme Toggle Functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // Check for saved theme preference or default to dark
+            const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+            body.classList.add(savedTheme);
+            updateThemeIcon(savedTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                if (body.classList.contains('dark-theme')) {
+                    body.classList.replace('dark-theme', 'light-theme');
+                    localStorage.setItem('theme', 'light-theme');
+                    updateThemeIcon('light-theme');
+                } else {
+                    body.classList.replace('light-theme', 'dark-theme');
+                    localStorage.setItem('theme', 'dark-theme');
+                    updateThemeIcon('dark-theme');
+                }
+            });
+            
+            function updateThemeIcon(theme) {
+                const icon = themeToggle.querySelector('i');
+                if (theme === 'dark-theme') {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                }
+            }
+            
+            // Mobile Menu Toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const nav = document.getElementById('main-nav');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                nav.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('nav') && !e.target.closest('.mobile-menu-toggle')) {
+                    nav.classList.remove('active');
+                }
+            });
+            
+            // Product Catalog Functionality
+            const productsContainer = document.getElementById('products-container');
+            const searchInput = document.getElementById('search-input');
+            const categoryFilter = document.getElementById('category-filter');
+            const sortFilter = document.getElementById('sort-filter');
+            const paginationContainer = document.getElementById('pagination');
+            
+            let currentPage = 1;
+            const productsPerPage = 6;
+            
+            // Initialize the product catalog
+            displayProducts();
+            setupEventListeners();
+            
+            function displayProducts(page = 1, filteredProducts = products) {
+                currentPage = page;
+                const startIndex = (page - 1) * productsPerPage;
+                const endIndex = startIndex + productsPerPage;
+                const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+                
+                productsContainer.innerHTML = '';
+                
+                if (paginatedProducts.length === 0) {
+                    productsContainer.innerHTML = '<p class="text-center" style="grid-column: 1 / -1; padding: 2rem;">No products found matching your criteria.</p>';
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+                
+                paginatedProducts.forEach(product => {
+                    const productCard = createProductCard(product);
+                    productsContainer.appendChild(productCard);
+                });
+                
+                setupPagination(filteredProducts.length, page);
+            }
+            
+            function createProductCard(product) {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                card.innerHTML = `
+                    <div class="product-image">
+                        <div class="text-center">
+                            <i class="${product.icon}" style="font-size: 3rem;"></i>
+                            <p>${product.name.split(' ')[0]}</p>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="product-code">REF: ${product.code}</p>
+                        <p>${product.description}</p>
+                        <p class="product-specs">${product.specs}</p>
+                        <button class="whatsapp-btn" data-product="${product.name}" data-code="${product.code}">
+                            <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+                        </button>
+                    </div>
+                `;
+                
+                return card;
+            }
+            
+            function setupPagination(totalProducts, currentPage) {
+                const totalPages = Math.ceil(totalProducts / productsPerPage);
+                
+                if (totalPages <= 1) {
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+                
+                let paginationHTML = '';
+                
+                // Previous button
+                if (currentPage > 1) {
+                    paginationHTML += `<button class="pagination-btn" data-page="${currentPage - 1}">Previous</button>`;
+                }
+                
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === currentPage) {
+                        paginationHTML += `<button class="pagination-btn active" data-page="${i}">${i}</button>`;
+                    } else {
+                        paginationHTML += `<button class="pagination-btn" data-page="${i}">${i}</button>`;
+                    }
+                }
+                
+                // Next button
+                if (currentPage < totalPages) {
+                    paginationHTML += `<button class="pagination-btn" data-page="${currentPage + 1}">Next</button>`;
+                }
+                
+                paginationContainer.innerHTML = paginationHTML;
+                
+                // Add event listeners to pagination buttons
+                document.querySelectorAll('.pagination-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const page = parseInt(this.getAttribute('data-page'));
+                        filterAndSortProducts(page);
+                    });
+                });
+            }
+            
+            function setupEventListeners() {
+                searchInput.addEventListener('input', function() {
+                    filterAndSortProducts(1);
+                });
+                
+                categoryFilter.addEventListener('change', function() {
+                    filterAndSortProducts(1);
+                });
+                
+                sortFilter.addEventListener('change', function() {
+                    filterAndSortProducts(1);
+                });
+                
+                // WhatsApp button functionality
+                document.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('whatsapp-btn') || e.target.closest('.whatsapp-btn')) {
+                        const button = e.target.classList.contains('whatsapp-btn') ? e.target : e.target.closest('.whatsapp-btn');
+                        const productName = button.getAttribute('data-product');
+                        const productCode = button.getAttribute('data-code');
+                        
+                        // Format the message
+                        const message = `Hello, I'm interested in ${productName} (${productCode}). Please provide more details.`;
+                        
+                        // Encode the message for URL
+                        const encodedMessage = encodeURIComponent(message);
+                        
+                        // Create WhatsApp URL
+                        const whatsappURL = `https://wa.me/919876543210?text=${encodedMessage}`;
+                        
+                        // Open WhatsApp
+                        window.open(whatsappURL, '_blank');
+                    }
+                });
+            }
+            
+            function filterAndSortProducts(page = 1) {
+                const searchTerm = searchInput.value.toLowerCase();
+                const category = categoryFilter.value;
+                const sortBy = sortFilter.value;
+                
+                let filteredProducts = products.filter(product => {
+                    const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                         product.code.toLowerCase().includes(searchTerm) ||
+                                         product.description.toLowerCase().includes(searchTerm);
+                    const matchesCategory = category === 'all' || product.category === category;
+                    
+                    return matchesSearch && matchesCategory;
+                });
+                
+                // Sort products
+                if (sortBy === 'name') {
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                } else if (sortBy === 'code') {
+                    filteredProducts.sort((a, b) => a.code.localeCompare(b.code));
+                }
+                
+                displayProducts(page, filteredProducts);
+            }
+            
+            // Add scroll effect to header
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
